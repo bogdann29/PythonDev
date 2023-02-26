@@ -1,6 +1,13 @@
 from random import randrange
 import argparse
 from urllib.request import urlopen
+import cowsay
+
+
+def rand_cow(message):
+    cows = cowsay.list_cows()
+    c = cows[randrange(0, len(cows))]
+    print(cowsay.cowsay(message=message, cow=c))
 
 def bullscows(guess: str, secret: str) -> (int, int):
     s1 = set(guess)
@@ -14,17 +21,17 @@ def bullscows(guess: str, secret: str) -> (int, int):
 
 
 def ask(prompt: str, valid: list[str] = None) -> str:
-    print(prompt)
+    rand_cow(prompt)
     word = input()
     if valid:
         while word not in valid:
-            print(prompt)
+            rand_cow(prompt)
             word = input()
     return word
 
 
 def inform(format_string: str, bulls: int, cows: int) -> None:
-    print(format_string.format(bulls, cows))
+    rand_cow(format_string.format(bulls, cows))
 
 
 def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
@@ -49,6 +56,5 @@ f = urlopen(args.dict)
 words = f.read().decode().split()
 words = [word for word in words if len(word) == args.length]
 
-print(gameplay(ask, inform, words))
-
+rand_cow(str(gameplay(ask, inform, words)))
 
