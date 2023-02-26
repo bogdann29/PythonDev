@@ -5,9 +5,9 @@ import cowsay
 
 
 def rand_cow(message):
-    cows = cowsay.list_cows()
-    c = cows[randrange(0, len(cows))]
-    print(cowsay.cowsay(message=message, cow=c))
+    #cows = cowsay.list_cows()
+    #c = cows[randrange(0, len(cows))]
+    print(cowsay.cowsay(message=message, cow='cow', cowfile=mycow))
 
 def bullscows(guess: str, secret: str) -> (int, int):
     s1 = set(guess)
@@ -56,5 +56,6 @@ f = urlopen(args.dict)
 words = f.read().decode().split()
 words = [word for word in words if len(word) == args.length]
 
+mycow = cowsay.read_dot_cow(open('mycow.cow', 'r'))
 rand_cow(str(gameplay(ask, inform, words)))
 
