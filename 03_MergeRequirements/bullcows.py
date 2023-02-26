@@ -1,5 +1,6 @@
 from random import randrange
-
+import argparse
+from urllib.request import urlopen
 
 def bullscows(guess: str, secret: str) -> (int, int):
     s1 = set(guess)
@@ -39,6 +40,15 @@ def gameplay(ask: callable, inform: callable, words: list[str]) -> int:
     return n
 
 
-print(gameplay(ask, inform, ['abcde', 'defgt', 'asgwas', 'lajgs']))
+p = argparse.ArgumentParser()
+p.add_argument('dict', type=str)
+p.add_argument('length', type=int, default=5)
+
+args = p.parse_args()
+f = urlopen(args.dict)
+words = f.read().decode().split()
+words = [word for word in words if len(word) == args.length]
+
+print(gameplay(ask, inform, words))
 
 
